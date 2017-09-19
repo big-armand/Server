@@ -1,0 +1,19 @@
+/** { margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+*/
+
+body {
+    padding-top: 4.5rem;
+    font: Helvetica, Arial;
+}
+        
+/*#org {
+    position: fixed;
+    margin-bottom: 21px;
+    bottom: 21px;
+    padding: 3px;
+    background: black;
+    color: white;
+}*/
