@@ -78,7 +78,7 @@
 	<script src="http://localhost:8080/socket.io/socket.io.js"></script>
 	<script>
 		$(function() {
-			var socket = io('http://localhost:8080');
+			var socket = io();
 			var clientName = '';
 			while (clientName == '' || clientName == null) {
 				clientName = prompt("Entrez votre nom");
