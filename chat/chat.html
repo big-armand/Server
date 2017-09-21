@@ -73,10 +73,42 @@
 		<dl id="messages"></dl>
 	</div>
 
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	<script src="/socket.io/socket.io.js"></script>
 	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-	<script src="http://localhost:8080/client.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="http://localhost:8080/socket.io/socket.io.js"></script>
+	<script>
+		$(function() {
+			var socket = io('http://localhost:8080');
+			var clientName = '';
+			while (clientName == '' || clientName == null) {
+				clientName = prompt("Entrez votre nom");
+			}
+			socket.emit("pseudo", clientName);
+			$('form').submit(function() {
+				if (!($('#m').val() === "")) {
+					socket.emit('sender name', clientName);
+					socket.emit('chat message', $('#m').val());
+					$('#m').val('');
+				}
+				return false;
+			});
+			socket.on('sender name', function(senderName) {
+				$('#messages').append($('<dt>').text(senderName));
+			});
+			socket.on('chat message', function(msg) {
+				$('#messages').append($('<dd>').text(msg));
+				window.scrollTo(0, document.body.scrollHeight);
+			});
+			socket.on('org msg', function(msg) {
+				$('#org').addClass("alert alert-dark").text(msg);
+				setTimeout(function() {
+					$('#org').empty().removeClass("alert alert-dark");
+				}, 3000);
+			});
+
+		});
+
+	</script>
 
 </body>
 

@@ -44,9 +44,9 @@ app.use(express.static(__dirname + '/chat'))
 	/* redirige l'accueil si la page demandée n'est pas trouvée */
 	.use(function (req, res, next) {
 		res.redirect('/');
-	})
+	});
 
-	.listen(8080);
+server.listen(8080);
 
 io.on('connection', function (socket) {
 	socket.on('pseudo', function (clientName) {
