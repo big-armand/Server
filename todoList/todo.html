@@ -7,15 +7,7 @@
 	<title>Todo List</title>
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<!--<link rel="stylesheet" type="text/css" href="todo.css">-->
-
-	<style type="text/css">
-		body {
-			padding-top: 4.5rem;
-			font: Helvetica, Arial;
-		}
-
-	</style>
+	<link rel="stylesheet" type="text/css" href="todo.css">
 </head>
 
 <body>
@@ -46,16 +38,22 @@
 		<h1>Todo List</h1>
 		<div class="row">
 			<h2>À faire: </h2>
-			<div class="row">
-				<div class="col-sm-6">
-					<h3>La liste: </h3>
-					<ul id="ul">
+			<div class="col-sm-6">
+				<h3>La liste: </h3>
+				<ul id="ulTodo">
 
-					</ul>
-				</div>
-				<div class="col-sm-6">
-					<h3>Qu'ajouter? </h3>
-					<form>
+				</ul>
+			</div>
+			<div class="col-sm-6">
+				<h3>Qu'ajouter? </h3>
+				<div class="col-lg-6">
+					<form id="formTodo">
+						<div class="input-group">
+							<input id="itemTodo" type="text" class="form-control" placeholder="Item à ajouter...">
+							<span class="input-group-btn">
+							<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-floppy-disk"></span> Ajouter</button>
+							</span>
+						</div>
 					</form>
 				</div>
 			</div>
@@ -65,11 +63,22 @@
 			<h2>À acheter: </h2>
 			<div class="col-sm-6">
 				<h3>La liste: </h3>
+				<ul id="ulTobuy">
+
+				</ul>
 			</div>
 			<div class="col-sm-6">
 				<h3>Qu'ajouter? </h3>
-				<form>
-				</form>
+				<div class="col-lg-6">
+					<form id="formTobuy">
+						<div class="input-group">
+							<input id="itemTobuy" type="text" class="form-control" placeholder="Item à ajouter...">
+							<span class="input-group-btn">
+							<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-floppy-disk"></span> Ajouter</button>
+							</span>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -79,11 +88,41 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		$(function() {
-			window.onload = function() {
-				console.log('LOADED');
-			}
-			//var socket = io();
+			var socket = io.connect('/todo'),
+				ulElt = $('#ulTodo'),
+				todoCount = 0;
 
+			socket.on('addOneTodo', function(item) {
+				var spanElt = $('<span>✘</span>');
+				spanElt.append(" " + item);
+				spanElt.attr("id", "n" + todoCount);
+				$('#ulTodo').append($('<li></li>').append(spanElt));
+				todoCount++;
+			});
+
+			socket.on('addOneTobuy', function(item) {
+				$('#ulTobuy').append($('<li></li>').text(item));
+			});
+
+			$("#formTodo").submit(function() {
+				if (!($('#itemTodo').val() === "")) {
+					socket.emit('addTodo', $('#itemTodo').val());
+					$('#itemTodo').val('');
+				}
+				return false;
+			});
+
+			$("#formTobuy").submit(function() {
+				if (!($('#itemTobuy').val() === "")) {
+					socket.emit('addTobuy', $('#itemTobuy').val());
+					$('#itemTobuy').val('');
+				}
+				return false;
+			});
+
+			$("#n0").click(function() {
+				console.log('AJAJAJAJ');
+			});
 
 
 		});

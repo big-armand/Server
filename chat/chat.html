@@ -78,7 +78,7 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		$(function() {
-			var socket = io();
+			var socket = io("http://localhost:8080/chat");
 			var clientName = '';
 			while (clientName == '' || clientName == null) {
 				clientName = prompt("Entrez votre nom");
@@ -100,9 +100,10 @@
 				window.scrollTo(0, document.body.scrollHeight);
 			});
 			socket.on('org msg', function(msg) {
-				$('#org').addClass("alert alert-dark").text(msg);
+				// add glyphicon user
+				$('#org').addClass("label label-default").text(msg);
 				setTimeout(function() {
-					$('#org').empty().removeClass("alert alert-dark");
+					$('#org').empty().removeClass("label label-default");
 				}, 3000);
 			});
 
