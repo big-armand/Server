@@ -42,6 +42,7 @@
 				<h3>La liste: </h3>
 				<ul id="ulTodo">
 
+
 				</ul>
 			</div>
 			<div class="col-sm-6">
@@ -93,15 +94,20 @@
 				todoCount = 0;
 
 			socket.on('addOneTodo', function(item) {
-				var spanElt = $('<span>✘</span>');
-				spanElt.append(" " + item);
-				spanElt.attr("id", "n" + todoCount);
-				$('#ulTodo').append($('<li></li>').append(spanElt));
-				todoCount++;
+				var spanElt = $('<a class="btn btn-danger">✘</a>');
+				spanElt.attr("href", "/todo/suppr/" + todoCount);
+				var liElt = ($('<li id=' + todoCount++ + '> </li>').append(spanElt));
+				liElt.append(" " + item);
+				$('#ulTodo').append(liElt);
 			});
 
 			socket.on('addOneTobuy', function(item) {
 				$('#ulTobuy').append($('<li></li>').text(item));
+			});
+
+			socket.on('changeTodo', function(num) {
+				$('#' + num).remove();
+				socket.emit('changeTodo');
 			});
 
 			$("#formTodo").submit(function() {
@@ -120,9 +126,28 @@
 				return false;
 			});
 
-			$("#n0").click(function() {
-				console.log('AJAJAJAJ');
+			/*var	 removeElts = document.getElementsByClassName("btn-danger");
+			removeElt.forEach(function(elt) {
+				console.log("ET de UN");
+				elt.onclick(function() {
+					console.log('DONE');
+				});
+			});*/
+
+			$(document).ready(function() {
+				$('#id_1').click(function() {
+					console.log("WOrkED");
+				});
 			});
+
+			/*$("#n0").onload = function() {
+				document.getElementById('n0').onclick = function() {
+					console.log('tTZUIUZTF');
+				};
+				$("#n1").click(function() {
+					console.log('AJAJAJAJ');
+				});
+			};*/
 
 
 		});
