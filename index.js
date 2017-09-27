@@ -88,7 +88,6 @@ app.use(express.static(__dirname + '/chat'))
 		if (req.params.id != "") {
 			jsonTodo = fs.readFileSync('todo.json', 'utf-8');
 			if (jsonTodo != null) {
-				console.log(req.params.id);
 				var arrayTodo = JSON.parse(jsonTodo);
 				arrayTodo.splice(req.params.id, 1);
 				jsonTodo = JSON.stringify(arrayTodo);

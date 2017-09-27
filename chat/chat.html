@@ -11,7 +11,7 @@
 			padding-top: 4.5rem;
 			font: Helvetica, Arial;
 		}
-		
+
 		.footer {
 			position: absolute;
 			bottom: 0;
@@ -79,6 +79,7 @@
 	<script>
 		$(function() {
 			var socket = io("http://localhost:8080/chat");
+			//
 			var clientName = '';
 			while (clientName == '' || clientName == null) {
 				clientName = prompt("Entrez votre nom");
