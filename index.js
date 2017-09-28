@@ -33,11 +33,7 @@ function getFile(path) {
 	try {
 		fileContents = fs.readFileSync(path, 'utf-8');
 	} catch (err) {
-		if (err.code === 'ENOENT') {
-			console.log('File not found!');
-		} else {
-			throw err;
-		}
+		throw err;
 	}
 	return fileContents;
 }
