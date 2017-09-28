@@ -28,9 +28,24 @@ io.of('/chat').on("connection", function (socket) {
 	});
 });
 
+function getFile(path) {
+	var fileContents;
+	try {
+		fileContents = fs.readFileSync(path, 'utf-8');
+	} catch (err) {
+		if (err.code === 'ENOENT') {
+			console.log('File not found!');
+		} else {
+			throw err;
+		}
+	}
+	return fileContents;
+}
+
 io.of('/todo').on("connection", function (socket) {
-	todoList = fs.readFileSync('todo.json', 'utf-8');
-	if (todoList != null) {
+	todoList = getFile('todo.json')
+
+	if (todoList != null && todoList != '') {
 		jsonTodo = JSON.parse(todoList);
 		jsonTodo.forEach(function (item) {
 			io.of('/todo').to(socket.id).emit('addOneTodo', item);

@@ -67,9 +67,8 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		$(function() {
-			var socket = io.connect("/chat");
-			//
-			var clientName = '';
+			var socket = io.connect("/chat"),
+				clientName = '';
 			while (clientName == '' || clientName == null) {
 				clientName = prompt("Entrez votre nom");
 			}
