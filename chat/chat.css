@@ -11,3 +11,7 @@ body {
 	height: 40px;
 	background-color: darkslategrey;
 }
+
+.float-sm-right {
+	font-size: 100%;
+}
