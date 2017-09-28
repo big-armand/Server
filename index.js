@@ -11,7 +11,8 @@ var express = require('express'),
 	ent = require('ent'),
 	fs = require('fs');
 
-var jsonTodo = null;
+var jsonTodo = null,
+	todoList = null;
 
 app.ioTodo = io.of('/todo');
 
@@ -28,7 +29,7 @@ io.of('/chat').on("connection", function (socket) {
 });
 
 io.of('/todo').on("connection", function (socket) {
-	var todoList = fs.readFileSync('todo.json', 'utf-8');
+	todoList = fs.readFileSync('todo.json', 'utf-8');
 	if (todoList != null) {
 		jsonTodo = JSON.parse(todoList);
 		jsonTodo.forEach(function (item) {
