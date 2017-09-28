@@ -107,7 +107,10 @@
 
 			socket.on('changeTodo', function(num) {
 				$('#' + num).remove();
-				socket.emit('changeTodo');
+				socket.emit('changedTodo');
+			});
+			socket.on('changedTodo', function(num) {
+				$('#' + num).remove();
 			});
 
 			$("#formTodo").submit(function() {
@@ -126,30 +129,11 @@
 				return false;
 			});
 
-			/*var	 removeElts = document.getElementsByClassName("btn-danger");
-			removeElt.forEach(function(elt) {
-				console.log("ET de UN");
-				elt.onclick(function() {
-					console.log('DONE');
-				});
-			});*/
-
 			$(document).ready(function() {
 				$('#id_1').click(function() {
 					console.log("WOrkED");
 				});
 			});
-
-			/*$("#n0").onload = function() {
-				document.getElementById('n0').onclick = function() {
-					console.log('tTZUIUZTF');
-				};
-				$("#n1").click(function() {
-					console.log('AJAJAJAJ');
-				});
-			};*/
-
-
 		});
 
 	</script>

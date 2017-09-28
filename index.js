@@ -11,7 +11,6 @@ var express = require('express'),
 	ent = require('ent'),
 	fs = require('fs');
 
-app.set('socketio', io);
 var jsonTodo = null;
 
 app.ioTodo = io.of('/todo');
@@ -57,8 +56,8 @@ io.of('/todo').on("connection", function (socket) {
 		}
 	});
 
-	socket.on('changeTodo', function () {
-		io.of('/todo').emit('changeTodo');
+	socket.on('changedTodo', function () {
+		io.of('/todo').emit('changedTodo');
 	});
 
 });
@@ -97,8 +96,6 @@ app.use(express.static(__dirname + '/chat'))
 			}
 		}
 		req.app.ioTodo.emit('changeTodo', req.params.id);
-		/*var insideIo = req.app.get('socketio');
-		insideIo.broadcast.emit('changeTodo');*/
 		res.redirect("/todo");
 	})
 

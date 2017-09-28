@@ -6,23 +6,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Socket.IO chat</title>
 
-	<style type="text/css">
-		body {
-			padding-top: 4.5rem;
-			font: Helvetica, Arial;
-		}
-
-		.footer {
-			position: absolute;
-			bottom: 0;
-			width: 80%;
-			/* Set the fixed height of the footer here */
-			height: 40px;
-			background-color: darkslategrey;
-		}
-
-	</style>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="chat.css">
+
 </head>
 
 <body>
@@ -78,7 +64,7 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		$(function() {
-			var socket = io("http://localhost:8080/chat");
+			var socket = io.connect("/chat");
 			//
 			var clientName = '';
 			while (clientName == '' || clientName == null) {
