@@ -15,3 +15,7 @@ body {
 .float-sm-right {
 	font-size: 100%;
 }
+
+nav {
+	font-family: 'Ubuntu';
+}

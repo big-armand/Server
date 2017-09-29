@@ -12,7 +12,9 @@ var express = require('express'),
 	fs = require('fs');
 
 var jsonTodo = null,
-	todoList = null;
+	jsonTobuy = null,
+	todoList = null,
+	tobuyList = null;
 
 app.ioTodo = io.of('/todo');
 
@@ -48,15 +50,8 @@ io.of('/todo').on("connection", function (socket) {
 		});
 	}
 
-
-	var tobuyList = fs.readFileSync('tobuy.json', 'utf-8'),
-		jsonTobuy = JSON.parse(tobuyList);
-	jsonTobuy.forEach(function (item) {
-		io.of('/todo').to(socket.id).emit('addOneTobuy', item);
-	});
-
 	socket.on('addTodo', function (item) {
-		var todoList = fs.readFileSync('todo.json', 'utf-8');
+		todoList = fs.readFileSync('todo.json', 'utf-8');
 		if (todoList != null) {
 			jsonTodo = JSON.parse(todoList);
 			jsonTodo.push(item);
@@ -72,10 +67,40 @@ io.of('/todo').on("connection", function (socket) {
 		io.of('/todo').emit('changedTodo');
 	});
 
+	//__---___---___---___---___---___---___---___
+
+	tobuyList = getFile('tobuy.json')
+
+	if (tobuyList != null && tobuyList != '') {
+		jsonTobuy = JSON.parse(tobuyList);
+		jsonTobuy.forEach(function (item) {
+			io.of('/todo').to(socket.id).emit('addOneTobuy', item);
+		});
+	}
+
+	socket.on('addTobuy', function (item) {
+		tobuyList = fs.readFileSync('tobuy.json', 'utf-8');
+		if (tobuyList != null) {
+			jsonTobuy = JSON.parse(tobuyList);
+			jsonTobuy.push(item);
+			tobuyList = JSON.stringify(jsonTobuy);
+			fs.writeFile('tobuy.json', tobuyList, 'utf8', function (err) {
+				if (err) throw err;
+			});
+			io.of('/todo').emit('addOneTobuy', item);
+		}
+	});
+
+	socket.on('changedTobuy', function () {
+		io.of('/todo').emit('changedTobuy');
+	});
+
 });
 
 app.use(express.static(__dirname + '/chat'))
 	.use(express.static(__dirname + '/todoList'))
+	.use(express.static(__dirname + '/streaming'))
+
 	.use(session({
 		secret: 'topsecret'
 	}))
@@ -111,8 +136,66 @@ app.use(express.static(__dirname + '/chat'))
 		res.redirect("/todo");
 	})
 
+	.get('/todo/supprTobuy/:id', function (req, res) {
+		if (req.params.id != "") {
+			jsonTobuy = fs.readFileSync('tobuy.json', 'utf-8');
+			if (jsonTobuy != null) {
+				var arrayTobuy = JSON.parse(jsonTobuy);
+				arrayTobuy.splice(req.params.id, 1);
+				jsonTobuy = JSON.stringify(arrayTobuy);
+				fs.writeFile('tobuy.json', jsonTobuy, 'utf8', function (err) {
+					if (err) throw err;
+				});
+			}
+		}
+		req.app.ioTodo.emit('changeTobuy', req.params.id);
+		res.redirect("/todo");
+	})
+
+	//_________-----------____START-STREAMING_______-------_____
+
+	.get('/streaming', function (req, res) {
+		res.sendFile(__dirname + '/streaming/streaming.html');
+	})
+
+	.get('/video', function (req, res) {
+		var path = 'streaming/assets/Rick.and.Morty.S03E01.HDTV.x264-W4F[eztv].mkv',
+			stat = fs.statSync(path),
+			fileSize = stat.size,
+			range = req.headers.range;
+
+		if (range) {
+			var parts = range.replace(/bytes=/, "").split("-"),
+				start = parseInt(parts[0], 10),
+				end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+
+			var chunksize = (end - start) + 1,
+				file = fs.createReadStream(path, {
+					start,
+					end
+				}),
+				head = {
+					'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+					'Accept-Ranges': 'bytes',
+					'Content-Length': chunksize,
+					'Content-Type': 'video/mkv',
+				};
+
+			res.writeHead(206, head);
+			file.pipe(res);
+		} else {
+			const head = {
+				'Content-Length': fileSize,
+				'Content-Type': 'video/mkv',
+			}
+			res.writeHead(200, head)
+			fs.createReadStream(path).pipe(res)
+		}
+	})
+	//_________-----------____END-STREAMING_______-------_____
+
 	/* redirige vers l'accueil si la page demandée n'est pas trouvée */
-	.use(function (req, res, next) {
+	.use(function (req, res) {
 		res.redirect('/');
 	});
 
