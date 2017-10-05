@@ -100,6 +100,8 @@ io.of('/todo').on("connection", function (socket) {
 app.use(express.static(__dirname + '/chat'))
 	.use(express.static(__dirname + '/todoList'))
 	.use(express.static(__dirname + '/streaming'))
+	.use(express.static(__dirname + '/weather'))
+
 
 	.use(session({
 		secret: 'topsecret'
@@ -193,6 +195,10 @@ app.use(express.static(__dirname + '/chat'))
 		}
 	})
 	//_________-----------____END-STREAMING_______-------_____
+
+	.get('/weather', function (req, res) {
+		res.sendFile(__dirname + '/weather/weather.html');
+	})
 
 	/* redirige vers l'accueil si la page demandée n'est pas trouvée */
 	.use(function (req, res) {
