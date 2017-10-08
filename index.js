@@ -161,7 +161,7 @@ app.use(express.static(__dirname + '/chat'))
 	})
 
 	.get('/video', function (req, res) {
-		var path = 'streaming/assets/Rick.and.Morty.S03E01.HDTV.x264-W4F[eztv].mkv',
+		var path = __dirname + '/streaming/assets/Rick.mkv',
 			stat = fs.statSync(path),
 			fileSize = stat.size,
 			range = req.headers.range;
