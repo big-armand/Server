@@ -102,7 +102,7 @@
 				var spanElt = $('<a class="btn btn-danger">✘</a>');
 				spanElt.attr("href", "/todo/suppr/" + todoCount);
 				var liElt = ($('<li id=' + todoCount++ + '> </li>').append(spanElt));
-				liElt.append(" " + item);
+				liElt.append($("<span></span>").text(" " + item));
 				$('#ulTodo').append(liElt);
 			});
 
@@ -110,7 +110,7 @@
 				var spanElt = $('<a class="btn btn-danger">✘</a>');
 				spanElt.attr("href", "/todo/supprTobuy/" + tobuyCount);
 				var liElt = ($('<li id=tobuy' + tobuyCount++ + '> </li>').append(spanElt));
-				liElt.append(" " + item);
+				liElt.append($("<span></span>").text(" " + item));
 				$('#ulTobuy').append(liElt);
 			});
 
