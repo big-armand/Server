@@ -21,7 +21,7 @@ app.ioTodo = io.of('/todo');
 io.of('/chat').on("connection", function (socket) {
 	socket.on('pseudo', function (clientName) {
 		io.of('/chat').emit('org msg', clientName + " connected");
-	})
+	});
 	socket.on('sender name', function (senderName) {
 		io.of('/chat').emit('sender name', senderName);
 	});
@@ -69,7 +69,7 @@ io.of('/todo').on("connection", function (socket) {
 
 	//__---___---___---___---___---___---___---___
 
-	tobuyList = getFile('tobuy.json')
+	tobuyList = getFile('tobuy.json');
 
 	if (tobuyList != null && tobuyList != '') {
 		jsonTobuy = JSON.parse(tobuyList);
@@ -169,9 +169,9 @@ app.use(express.static(__dirname + '/chat'))
 		if (range) {
 			var parts = range.replace(/bytes=/, "").split("-"),
 				start = parseInt(parts[0], 10),
-				end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+				end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1,
 
-			var chunksize = (end - start) + 1,
+				chunksize = (end - start) + 1,
 				file = fs.createReadStream(path, {
 					start,
 					end
