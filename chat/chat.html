@@ -54,15 +54,14 @@
 
 
 	<div class="container">
-		<div class="col-md-2 float-sm-right" id="org">
-
+		<div class="col-sm-2" id="orgLong">
 		</div>
 
 		<div class="col-sm-8">
 			<dl id="messages"></dl>
 		</div>
 
-		<div class="col-sm-2" id="orgLong">
+		<div class="col-md-2 float-sm-right" id="org">
 		</div>
 	</div>
 
@@ -98,7 +97,7 @@
 				setTimeout(function() {
 					$('#org').empty().removeClass("label label-default");
 				}, 3000);
-				$('#orgLong').append($('<div></div').text(msg));
+				$('#orgLong').append($('<p></p>').text(msg));
 			});
 
 		});
