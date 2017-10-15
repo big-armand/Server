@@ -9,9 +9,9 @@ var express = require('express'),
 	server = require('http').createServer(app),
 	io = require('socket.io').listen(server),
 	ent = require('ent'),
-	fs = require('fs');
+	fs = require('fs'),
 
-var jsonTodo = null,
+	jsonTodo = null,
 	jsonTobuy = null,
 	todoList = null,
 	tobuyList = null;
@@ -97,15 +97,13 @@ io.of('/todo').on("connection", function (socket) {
 
 });
 
-app.use(express.static(__dirname + '/chat'))
+app.use(session({
+		secret: 'topsecret'
+	}))
+	.use(express.static(__dirname + '/chat'))
 	.use(express.static(__dirname + '/todoList'))
 	.use(express.static(__dirname + '/streaming'))
 	.use(express.static(__dirname + '/weather'))
-
-
-	.use(session({
-		secret: 'topsecret'
-	}))
 
 	/*affiche l'accueil*/
 	.get('/', function (req, res) {
