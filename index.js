@@ -1,4 +1,4 @@
-var express = require('express'),
+const express = require('express'),
 	session = require('cookie-session'),
 	bodyParser = require('body-parser'),
 	urlencodedParser = bodyParser.urlencoded({
@@ -9,9 +9,9 @@ var express = require('express'),
 	server = require('http').createServer(app),
 	io = require('socket.io').listen(server),
 	ent = require('ent'),
-	fs = require('fs'),
+	fs = require('fs');
 
-	jsonTodo = null,
+var	jsonTodo = null,
 	jsonTobuy = null,
 	todoList = null,
 	tobuyList = null;
