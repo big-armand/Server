@@ -115,6 +115,16 @@ app.use(session({
 		res.sendFile(__dirname + '/chat/chat.html');
 	})
 
+	/*affiche MusicSheetMaker*/
+	.get('/MSM', function (req, res) {
+		res.sendFile(__dirname + '/MusicSheetMaker/MSM.html');
+	})
+
+	/*affiche MusicSheetMaker*/
+	.get('/logo', function (req, res) {
+		res.sendFile(__dirname + '/MusicSheetMaker/logo.jpg');
+	})
+
 	/* affiche la todolist */
 	.get('/todo', function (req, res) {
 		res.sendFile(__dirname + '/todoList/todo.html');

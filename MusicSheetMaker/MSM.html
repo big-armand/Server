@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>MusicSheetMaker</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="todo.css">
+	<link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        			<span class="sr-only">Toggle navigation</span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+      			</button>
+				<a class="navbar-brand" href="/">FALABRÈGUES Server</a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="/chat">Chat</a></li>
+					<li><a href="/todo">Todo List</a></li>
+					<li><a href="/streaming">Streaming</a></li>
+					<li class="active"><a href="#">MusicSheetMaker</a></li>
+					<li><a href="#">A venir</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container-fluid">
+		<h1>Music Sheet Maker</h1>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="jumbotron">
+					<div class="container">
+						<h2><span class="glyphicon glyphicon-music"></span> Quoi?</h2>
+						<div class="col-sm-12">
+							<p>Faire une partition à partir d'une musique</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-5">
+				<div class="jumbotron">
+					<div class="container">
+						<h2><span class="glyphicon glyphicon-pencil"></span> Rapport de soutenance</h2>
+						<div class="col-sm-12">
+							<p>Télécharger la dernière version du rapport de soutenance</p>
+							<p><a class="btn btn-primary" href="/rapport">Rapport</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2">
+				<img src="/logo" height="300">
+			</div>
+			<div class="col-md-5">
+				<div class="jumbotron">
+					<div class="container">
+						<h2><span class="glyphicon glyphicon-user"></span> Qui?</h2>
+						<div class="col-sm-12">
+							<ul style="font-size: 22px">
+								<li>Mickael El Hawat</li>
+								<li>Camille Louis</li>
+								<li>Amin Sdouga</li>
+								<li>Armand Falabrègues</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
