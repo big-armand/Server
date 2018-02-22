@@ -125,6 +125,11 @@ app.use(session({
 		res.sendFile(__dirname + '/MusicSheetMaker/logo.jpg');
 	})
 
+	/*affiche MusicSheetMaker*/
+	.get('/pdf', function (req, res) {
+		res.sendFile(__dirname + '/MusicSheetMaker/music-sheet-maker.pdf');
+	})
+
 	/* affiche la todolist */
 	.get('/todo', function (req, res) {
 		res.sendFile(__dirname + '/todoList/todo.html');
